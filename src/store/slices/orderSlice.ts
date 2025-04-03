@@ -1,3 +1,4 @@
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type OrderStatus = 'pending' | 'shipped' | 'delivered' | 'cancelled';
@@ -40,7 +41,7 @@ interface OrderState {
   currentOrder: Order | null;
 }
 
- 
+// Mock data for initial state
 const mockOrders: Order[] = [
   {
     id: 'ORD-001',

@@ -1,3 +1,4 @@
+
 import { configureStore } from '@reduxjs/toolkit';
 import orderReducer from './slices/orderSlice';
 import customerReducer from './slices/customerSlice';
