@@ -167,7 +167,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
     
     const phoneRegex = /^(?:\+91)?[6-9]\d{9}$/;;
     if (!formData.mobileNumber || !phoneRegex.test(formData.mobileNumber)) {
-      newErrors.mobileNumber = 'Valid phone number is required (format: 555-123-4567)';
+      newErrors.mobileNumber = 'Valid phone number is required (format: 9551234567)';
     }
     
     if (!formData.items || formData.items.length === 0) {
