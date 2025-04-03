@@ -142,7 +142,7 @@ const Sidebar = ({ isOpen, toggleSidebar, className }: SidebarProps) => {
     <div className="bg-gray-900 border-r border-blue-900/30 text-white hidden md:block h-full w-64 fixed left-0 top-0 overflow-y-auto z-20">
       <div className="p-5 border-b border-blue-900/30">
         <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
-          Order Management
+          OMS
         </h1>
       </div>
       
