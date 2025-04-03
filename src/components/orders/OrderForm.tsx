@@ -165,7 +165,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
       newErrors.email = 'Valid email is required';
     }
     
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    const phoneRegex = /^(?:\+91)?[6-9]\d{9}$/;;
     if (!formData.mobileNumber || !phoneRegex.test(formData.mobileNumber)) {
       newErrors.mobileNumber = 'Valid phone number is required (format: 555-123-4567)';
     }
@@ -433,7 +433,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                     name="mobileNumber"
                     value={formData.mobileNumber || ''}
                     onChange={handleChange}
-                    placeholder="555-123-4567"
+                    placeholder="9512384567"
                     className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.mobileNumber ? 'border-red-500' : ''}`}
                   />
                   {errors.mobileNumber && (
