@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, User, Settings, Menu, ChevronDown, Search } from 'lucide-react';
+import { Bell, User, Settings, Menu,   Search } from 'lucide-react';
 
 interface HeaderProps {
   isMobile: boolean;
@@ -21,8 +21,8 @@ const Header = ({ isMobile, toggleSidebar }: HeaderProps) => {
   };
 
   return (
-    <header className="bg-[#0f172a] h-16 flex items-center justify-between px-6 sticky top-0 z-10">
-      <div className="flex items-center">
+    <header className="bg-[#0f172a] h-16 flex items-center justify-between px-4 md:px-6 sticky top-0 z-40">
+      <div className="flex items-center min-w-0">
         {isMobile && (
           <button 
             onClick={toggleSidebar} 
@@ -32,11 +32,11 @@ const Header = ({ isMobile, toggleSidebar }: HeaderProps) => {
             <Menu className="w-6 h-6" />
           </button>
         )}
-        <div className="flex items-center">
-          <h2 className="text-lg font-semibold text-blue-400 truncate">
+        <div className="flex items-center min-w-0">
+          <h2 className="text-base md:text-lg font-semibold text-blue-400 truncate">
             Order Management System
           </h2>
-          <span className="text-blue-400 ml-2">
+          <span className="text-blue-400 ml-2 hidden md:block">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -44,7 +44,7 @@ const Header = ({ isMobile, toggleSidebar }: HeaderProps) => {
         </div>
       </div>
 
-      <div className="flex mx-4 flex-1 max-w-md relative justify-center">
+      <div className="hidden md:flex mx-4 flex-1 max-w-md relative justify-center">
         <div className="relative w-full max-w-md">
           <input 
             type="text" 
@@ -55,29 +55,29 @@ const Header = ({ isMobile, toggleSidebar }: HeaderProps) => {
         </div>
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-4">
         <button className="relative p-2 text-gray-300 hover:text-blue-400 transition duration-150" onClick={toggleNotifications}>
           <Bell className="w-5 h-5" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"></span>
         </button>
 
-        <button className="p-2 text-gray-300 hover:text-blue-400 transition duration-150">
+        <button className="p-2 text-gray-300 hover:text-blue-400 transition duration-150 hidden md:block">
           <Settings className="w-5 h-5" />
         </button>
 
         <div className="relative flex items-center">
-          <span className="text-gray-300 mr-2">Admin User</span>
+          <span className="text-gray-300 mr-2 hidden md:block">Admin User</span>
           <button 
             className="flex items-center"
             onClick={toggleUserMenu}
           >
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
-              <User className="w-5 h-5" />
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
+              <User className="w-4 h-4 md:w-5 md:h-5" />
             </div>
           </button>
 
           {showUserMenu && (
-            <div className="absolute right-0 top-12 w-48 bg-gray-900 rounded-md shadow-lg py-1 z-20 border border-gray-800">
+            <div className="absolute right-0 top-12 w-48 bg-gray-900 rounded-md shadow-lg py-1 z-50 border border-gray-800">
               <a href="#profile" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Your Profile</a>
               <a href="#settings" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Settings</a>
               <a href="#help" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800">Help Center</a>
@@ -89,7 +89,7 @@ const Header = ({ isMobile, toggleSidebar }: HeaderProps) => {
       </div>
 
       {showNotifications && (
-        <div className="absolute right-16 top-16 mt-2 w-80 bg-gray-900 rounded-md shadow-lg py-1 z-20 border border-gray-800 max-h-96 overflow-y-auto">
+        <div className="absolute right-4 md:right-16 top-16 mt-2 w-72 md:w-80 bg-gray-900 rounded-md shadow-lg py-1 z-50 border border-gray-800 max-h-96 overflow-y-auto">
           <div className="flex justify-between items-center px-4 py-2 border-b border-gray-800">
             <h3 className="font-medium text-gray-200">Notifications</h3>
             <button className="text-xs text-blue-400 hover:text-blue-300">Mark all as read</button>

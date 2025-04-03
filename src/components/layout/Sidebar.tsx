@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Users, Package, ShoppingCart, Home, X, BarChart, Settings, HelpCircle } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
@@ -8,9 +7,10 @@ import { motion } from 'framer-motion';
 interface SidebarProps {
   isOpen: boolean;
   toggleSidebar: () => void;
+  className?: string;
 }
 
-const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
+const Sidebar = ({ isOpen, toggleSidebar, className }: SidebarProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const isMobile = useIsMobile();
@@ -55,7 +55,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         {/* Overlay when sidebar is open on mobile */}
         {isOpen && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-30 md:hidden"
+            className="fixed inset-0 bg-opacity-70 backdrop-blur-sm z-30 md:hidden"
             onClick={toggleSidebar}
             aria-hidden="true"
           />
@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         
         {/* Mobile Sidebar */}
         <motion.div 
-          className="fixed inset-y-0 left-0 transform z-40 w-64 bg-gray-900 border-r border-blue-900/30 text-white md:hidden"
+          className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out w-64 bg-gray-900 ${className || ''}`}
           initial={{ x: "-100%" }}
           animate={{ x: isOpen ? 0 : "-100%" }}
           transition={{ duration: 0.3, ease: "easeInOut" }}

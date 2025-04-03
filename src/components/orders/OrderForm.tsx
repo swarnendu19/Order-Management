@@ -217,19 +217,22 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0  bg-opacity-70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-gray-900 text-gray-100 rounded-lg shadow-xl w-full max-w-5xl max-h-[90vh] overflow-y-auto border border-blue-500">
-        <div className="flex items-center justify-between p-6 border-b border-blue-700 bg-gradient-to-r from-blue-900 to-gray-900">
-          <h2 className="text-2xl font-semibold text-blue-300">
+    <div className="fixed inset-0 bg-opacity-70 flex items-center justify-center z-50 backdrop-blur-sm p-0 md:p-6">
+      <div className="bg-gray-900 text-gray-100 rounded-lg shadow-xl w-full h-full md:h-auto md:max-h-[90vh] md:w-full md:max-w-5xl overflow-y-auto border border-blue-500">
+        <div className="sticky top-0 z-10 flex items-center justify-between p-4 md:p-6 border-b border-blue-700 bg-gradient-to-r from-blue-900 to-gray-900">
+          <h2 className="text-xl md:text-2xl font-semibold text-blue-300">
             {order ? 'Edit Order' : 'Create New Order'}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-blue-300 transition duration-200">
+          <button 
+            onClick={onClose} 
+            className="text-gray-400 hover:text-blue-300 transition duration-200"
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
         
-        <form onSubmit={handleSubmit} className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <form onSubmit={handleSubmit} className="p-4 md:p-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div>
               <label className="block text-sm font-medium text-blue-300 mb-1">
                 Order ID
@@ -237,7 +240,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
               <Input
                 value={formData.id || ''}
                 readOnly
-                className="bg-gray-800 border-gray-700 text-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-gray-800/50 border-gray-700 text-gray-300"
               />
             </div>
             
@@ -249,9 +252,9 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                 name="customerId"
                 value={formData.customerId || ''}
                 onChange={handleCustomerChange}
-                className={`w-full p-2 border bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
+                className={`w-full p-2 rounded-md bg-gray-800/50 border ${
                   errors.customerId ? 'border-red-500' : 'border-gray-700'
-                }`}
+                } text-gray-100 focus:ring-2 focus:ring-blue-500/50`}
               >
                 <option value="">Select Client</option>
                 {customers.map(customer => (
@@ -273,7 +276,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                 name="status"
                 value={formData.status || 'pending'}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="w-full p-2 rounded-md bg-gray-800/50 border border-gray-700 text-gray-100 focus:ring-2 focus:ring-blue-500/50"
               >
                 <option value="pending">Pending</option>
                 <option value="shipped">Shipped</option>
@@ -283,22 +286,22 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
             </div>
           </div>
           
-          <div className="mb-6">
-            <h3 className="text-lg font-medium text-blue-300 mb-2">Order Items</h3>
+          <div className="bg-gray-800/30 rounded-lg border border-blue-900/30 p-4">
+            <h3 className="text-lg font-medium text-blue-300 mb-4">Order Items</h3>
             {errors.items && (
               <p className="text-red-400 text-xs mb-2">{errors.items}</p>
             )}
             
-            <div className="border border-blue-800 rounded-md p-4 mb-4 bg-gray-800 bg-opacity-50">
+            <div className="space-y-4">
               {formData.items && formData.items.map((item, index) => (
-                <div key={index} className="grid grid-cols-12 gap-3 mb-3 items-center">
-                  <div className="col-span-4">
+                <div key={index} className="grid grid-cols-12 gap-2 md:gap-3 items-start bg-gray-800/50 p-3 rounded-lg border border-gray-700">
+                  <div className="col-span-12 md:col-span-4 mb-2 md:mb-0">
                     <select
                       value={item.productId || ''}
                       onChange={(e) => handleItemChange(index, 'productId', e.target.value)}
-                      className={`w-full p-2 border bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
+                      className={`w-full p-2 rounded-md bg-gray-800 border ${
                         errors[`item-${index}-productId`] ? 'border-red-500' : 'border-gray-700'
-                      }`}
+                      } text-gray-100`}
                     >
                       <option value="">Select Product</option>
                       {products.map(product => (
@@ -307,62 +310,50 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                         </option>
                       ))}
                     </select>
-                    {errors[`item-${index}-productId`] && (
-                      <p className="text-red-400 text-xs mt-1">{errors[`item-${index}-productId`]}</p>
-                    )}
                   </div>
                   
-                  <div className="col-span-2">
+                  <div className="col-span-4 md:col-span-2">
                     <Input
                       type="number"
                       value={item.quantity}
                       onChange={(e) => handleItemChange(index, 'quantity', Number(e.target.value))}
                       placeholder="Qty"
                       min="1"
-                      className={`w-full bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                        errors[`item-${index}-quantity`] ? 'border-red-500' : ''
-                      }`}
+                      className="w-full bg-gray-800 border-gray-700"
                     />
-                    {errors[`item-${index}-quantity`] && (
-                      <p className="text-red-400 text-xs mt-1">{errors[`item-${index}-quantity`]}</p>
-                    )}
                   </div>
                   
-                  <div className="col-span-2">
+                  <div className="col-span-4 md:col-span-2">
                     <Input
                       type="number"
                       value={item.price}
                       onChange={(e) => handleItemChange(index, 'price', Number(e.target.value))}
                       placeholder="Price"
-                      min="0"
-                      step="0.01"
-                      className="w-full bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                      className="w-full bg-gray-800 border-gray-700"
                     />
                   </div>
                   
-                  <div className="col-span-2">
+                  <div className="col-span-3 md:col-span-2">
                     <Input
                       type="number"
                       value={item.discount}
                       onChange={(e) => handleItemChange(index, 'discount', Number(e.target.value))}
                       placeholder="Discount"
-                      min="0"
-                      step="0.01"
-                      className="w-full bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                      className="w-full bg-gray-800 border-gray-700"
                     />
                   </div>
                   
-                  <div className="col-span-1 font-medium text-blue-300">
-                    ${item.total.toFixed(2)}
+                  <div className="col-span-8 md:col-span-1 text-right md:text-center">
+                    <span className="text-blue-300">${item.total.toFixed(2)}</span>
                   </div>
                   
                   <div className="col-span-1">
                     <button
                       type="button"
                       onClick={() => removeItem(index)}
-                      className="text-red-400 hover:text-red-300 transition duration-200"
+                      className="text-red-400 hover:text-red-300 p-1"
                     >
-                      <Trash2 className="w-5 h-5" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -568,26 +559,28 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
             </div>
           </div>
           
-          <div className="flex items-center justify-between border-t border-blue-800 pt-4 mt-4">
-            <div className="text-lg font-semibold text-blue-300">
-              Total: ${formData.total?.toFixed(2) || '0.00'}
-            </div>
-            
-            <div className="flex space-x-3">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={onClose}
-                className="border-blue-700 text-blue-300 hover:bg-blue-900 hover:text-blue-100"
-              >
-                Cancel
-              </Button>
-              <Button 
-                type="submit" 
-                className="bg-blue-700 text-white hover:bg-blue-600 transition duration-200"
-              >
-                {order ? 'Update Order' : 'Create Order'}
-              </Button>
+          <div className="sticky bottom-0 bg-gray-900 border-t border-blue-800 pt-4 mt-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="text-lg font-semibold text-blue-300">
+                Total: ${formData.total?.toFixed(2) || '0.00'}
+              </div>
+              
+              <div className="flex gap-3">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={onClose}
+                  className="border-blue-700 text-blue-300 hover:bg-blue-900/50"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="submit" 
+                  className="bg-blue-700 text-white hover:bg-blue-600"
+                >
+                  {order ? 'Update Order' : 'Create Order'}
+                </Button>
+              </div>
             </div>
           </div>
         </form>

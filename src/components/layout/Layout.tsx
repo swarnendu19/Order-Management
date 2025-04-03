@@ -1,9 +1,7 @@
-
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
-import { Menu } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+ import { useIsMobile } from '@/hooks/use-mobile';
 import { BackgroundBeams } from '@/components/ui/background-beams';
 
 interface LayoutProps {
@@ -25,7 +23,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </div>
 
       <div className="flex flex-1 overflow-hidden relative">
-        <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          toggleSidebar={toggleSidebar} 
+          className={`${sidebarOpen && isMobile ? 'z-50' : ''}`}
+        />
         
         <div className={`flex-1 transition-all duration-300 ${isMobile ? 'ml-0' : 'ml-0 md:ml-64'}`}>
           <div className="hidden md:block">
