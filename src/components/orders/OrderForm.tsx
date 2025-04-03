@@ -4,14 +4,12 @@ import { X, Plus, Trash2 } from 'lucide-react';
 import { 
   Order, 
   OrderItem, 
-  OrderStatus, 
   addOrder, 
   updateOrder 
 } from '@/store/slices/orderSlice';
 import { RootState } from '@/store';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select } from '@/components/ui/select';
 import { toast } from 'sonner';
 
 interface OrderFormProps {
@@ -126,7 +124,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
     setFormData({ ...formData, items: updatedItems });
   };
 
-  const handleItemChange = (index: number, field: keyof OrderItem, value: any) => {
+  const handleItemChange = (index: number, field: keyof OrderItem, value: string | number) => {
     const updatedItems = [...(formData.items || [])];
     const item = { ...updatedItems[index], [field]: value };
     
