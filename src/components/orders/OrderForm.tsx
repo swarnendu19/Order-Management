@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { X, Plus, Trash2 } from 'lucide-react';
@@ -218,13 +217,13 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-semibold text-gray-800">
+    <div className="fixed inset-0  bg-opacity-70 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-gray-900 text-gray-100 rounded-lg shadow-xl w-full max-w-5xl max-h-[90vh] overflow-y-auto border border-blue-500">
+        <div className="flex items-center justify-between p-6 border-b border-blue-700 bg-gradient-to-r from-blue-900 to-gray-900">
+          <h2 className="text-2xl font-semibold text-blue-300">
             {order ? 'Edit Order' : 'Create New Order'}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button onClick={onClose} className="text-gray-400 hover:text-blue-300 transition duration-200">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -232,26 +231,26 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
         <form onSubmit={handleSubmit} className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-blue-300 mb-1">
                 Order ID
               </label>
               <Input
                 value={formData.id || ''}
                 readOnly
-                className="bg-gray-100"
+                className="bg-gray-800 border-gray-700 text-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-blue-300 mb-1">
                 Client Name *
               </label>
               <select
                 name="customerId"
                 value={formData.customerId || ''}
                 onChange={handleCustomerChange}
-                className={`w-full p-2 border rounded-md ${
-                  errors.customerId ? 'border-red-500' : 'border-gray-300'
+                className={`w-full p-2 border bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
+                  errors.customerId ? 'border-red-500' : 'border-gray-700'
                 }`}
               >
                 <option value="">Select Client</option>
@@ -262,19 +261,19 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                 ))}
               </select>
               {errors.customerId && (
-                <p className="text-red-500 text-xs mt-1">{errors.customerId}</p>
+                <p className="text-red-400 text-xs mt-1">{errors.customerId}</p>
               )}
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-blue-300 mb-1">
                 Status
               </label>
               <select
                 name="status"
                 value={formData.status || 'pending'}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50"
               >
                 <option value="pending">Pending</option>
                 <option value="shipped">Shipped</option>
@@ -285,20 +284,20 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
           </div>
           
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-800 mb-2">Order Items</h3>
+            <h3 className="text-lg font-medium text-blue-300 mb-2">Order Items</h3>
             {errors.items && (
-              <p className="text-red-500 text-xs mb-2">{errors.items}</p>
+              <p className="text-red-400 text-xs mb-2">{errors.items}</p>
             )}
             
-            <div className="border border-gray-200 rounded-md p-4 mb-4">
+            <div className="border border-blue-800 rounded-md p-4 mb-4 bg-gray-800 bg-opacity-50">
               {formData.items && formData.items.map((item, index) => (
                 <div key={index} className="grid grid-cols-12 gap-3 mb-3 items-center">
                   <div className="col-span-4">
                     <select
                       value={item.productId || ''}
                       onChange={(e) => handleItemChange(index, 'productId', e.target.value)}
-                      className={`w-full p-2 border rounded-md ${
-                        errors[`item-${index}-productId`] ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full p-2 border bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
+                        errors[`item-${index}-productId`] ? 'border-red-500' : 'border-gray-700'
                       }`}
                     >
                       <option value="">Select Product</option>
@@ -309,7 +308,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                       ))}
                     </select>
                     {errors[`item-${index}-productId`] && (
-                      <p className="text-red-500 text-xs mt-1">{errors[`item-${index}-productId`]}</p>
+                      <p className="text-red-400 text-xs mt-1">{errors[`item-${index}-productId`]}</p>
                     )}
                   </div>
                   
@@ -320,12 +319,12 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                       onChange={(e) => handleItemChange(index, 'quantity', Number(e.target.value))}
                       placeholder="Qty"
                       min="1"
-                      className={`w-full ${
+                      className={`w-full bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
                         errors[`item-${index}-quantity`] ? 'border-red-500' : ''
                       }`}
                     />
                     {errors[`item-${index}-quantity`] && (
-                      <p className="text-red-500 text-xs mt-1">{errors[`item-${index}-quantity`]}</p>
+                      <p className="text-red-400 text-xs mt-1">{errors[`item-${index}-quantity`]}</p>
                     )}
                   </div>
                   
@@ -337,6 +336,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                       placeholder="Price"
                       min="0"
                       step="0.01"
+                      className="w-full bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                     />
                   </div>
                   
@@ -348,10 +348,11 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                       placeholder="Discount"
                       min="0"
                       step="0.01"
+                      className="w-full bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                     />
                   </div>
                   
-                  <div className="col-span-1 font-medium">
+                  <div className="col-span-1 font-medium text-blue-300">
                     ${item.total.toFixed(2)}
                   </div>
                   
@@ -359,7 +360,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                     <button
                       type="button"
                       onClick={() => removeItem(index)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-400 hover:text-red-300 transition duration-200"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
@@ -370,7 +371,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
               <button
                 type="button"
                 onClick={addItem}
-                className="flex items-center text-blue-600 hover:text-blue-800"
+                className="flex items-center text-blue-400 hover:text-blue-300 transition duration-200"
               >
                 <Plus className="w-4 h-4 mr-1" />
                 Add Product
@@ -380,19 +381,19 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <h3 className="text-lg font-medium text-gray-800 mb-3">Payment Information</h3>
+              <h3 className="text-lg font-medium text-blue-300 mb-3">Payment Information</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-blue-300 mb-1">
                     Payment Mode *
                   </label>
                   <select
                     name="paymentMode"
                     value={formData.paymentMode || ''}
                     onChange={handleChange}
-                    className={`w-full p-2 border rounded-md ${
-                      errors.paymentMode ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full p-2 border bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
+                      errors.paymentMode ? 'border-red-500' : 'border-gray-700'
                     }`}
                   >
                     <option value="">Select Payment Mode</option>
@@ -403,20 +404,20 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                     <option value="Cash on Delivery">Cash on Delivery</option>
                   </select>
                   {errors.paymentMode && (
-                    <p className="text-red-500 text-xs mt-1">{errors.paymentMode}</p>
+                    <p className="text-red-400 text-xs mt-1">{errors.paymentMode}</p>
                   )}
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-blue-300 mb-1">
                     Payment Type *
                   </label>
                   <select
                     name="paymentType"
                     value={formData.paymentType || ''}
                     onChange={handleChange}
-                    className={`w-full p-2 border rounded-md ${
-                      errors.paymentType ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full p-2 border bg-gray-800 text-gray-100 rounded-md focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
+                      errors.paymentType ? 'border-red-500' : 'border-gray-700'
                     }`}
                   >
                     <option value="">Select Payment Type</option>
@@ -425,18 +426,18 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                     <option value="Partial Payment">Partial Payment</option>
                   </select>
                   {errors.paymentType && (
-                    <p className="text-red-500 text-xs mt-1">{errors.paymentType}</p>
+                    <p className="text-red-400 text-xs mt-1">{errors.paymentType}</p>
                   )}
                 </div>
               </div>
             </div>
             
             <div>
-              <h3 className="text-lg font-medium text-gray-800 mb-3">Client Information</h3>
+              <h3 className="text-lg font-medium text-blue-300 mb-3">Client Information</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-blue-300 mb-1">
                     Mobile Number *
                   </label>
                   <Input
@@ -444,15 +445,15 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                     value={formData.mobileNumber || ''}
                     onChange={handleChange}
                     placeholder="555-123-4567"
-                    className={errors.mobileNumber ? 'border-red-500' : ''}
+                    className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.mobileNumber ? 'border-red-500' : ''}`}
                   />
                   {errors.mobileNumber && (
-                    <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>
+                    <p className="text-red-400 text-xs mt-1">{errors.mobileNumber}</p>
                   )}
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-blue-300 mb-1">
                     Email *
                   </label>
                   <Input
@@ -461,10 +462,10 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                     value={formData.email || ''}
                     onChange={handleChange}
                     placeholder="client@example.com"
-                    className={errors.email ? 'border-red-500' : ''}
+                    className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.email ? 'border-red-500' : ''}`}
                   />
                   {errors.email && (
-                    <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                    <p className="text-red-400 text-xs mt-1">{errors.email}</p>
                   )}
                 </div>
               </div>
@@ -472,11 +473,11 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
           </div>
           
           <div className="mb-6">
-            <h3 className="text-lg font-medium text-gray-800 mb-3">Shipping Address</h3>
+            <h3 className="text-lg font-medium text-blue-300 mb-3">Shipping Address</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-blue-300 mb-1">
                   Address Line 1 *
                 </label>
                 <Input
@@ -484,15 +485,15 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                   value={formData.addressLine1 || ''}
                   onChange={handleChange}
                   placeholder="Street address"
-                  className={errors.addressLine1 ? 'border-red-500' : ''}
+                  className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.addressLine1 ? 'border-red-500' : ''}`}
                 />
                 {errors.addressLine1 && (
-                  <p className="text-red-500 text-xs mt-1">{errors.addressLine1}</p>
+                  <p className="text-red-400 text-xs mt-1">{errors.addressLine1}</p>
                 )}
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-blue-300 mb-1">
                   Address Line 2
                 </label>
                 <Input
@@ -500,11 +501,12 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                   value={formData.addressLine2 || ''}
                   onChange={handleChange}
                   placeholder="Apartment, suite, etc."
+                  className="bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-blue-300 mb-1">
                   Address Line 3
                 </label>
                 <Input
@@ -512,11 +514,12 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                   value={formData.addressLine3 || ''}
                   onChange={handleChange}
                   placeholder="Additional address info"
+                  className="bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-blue-300 mb-1">
                   Postal Code *
                 </label>
                 <Input
@@ -524,15 +527,15 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                   value={formData.postalCode || ''}
                   onChange={handleChange}
                   placeholder="Postal code"
-                  className={errors.postalCode ? 'border-red-500' : ''}
+                  className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.postalCode ? 'border-red-500' : ''}`}
                 />
                 {errors.postalCode && (
-                  <p className="text-red-500 text-xs mt-1">{errors.postalCode}</p>
+                  <p className="text-red-400 text-xs mt-1">{errors.postalCode}</p>
                 )}
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-blue-300 mb-1">
                   City *
                 </label>
                 <Input
@@ -540,15 +543,15 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                   value={formData.city || ''}
                   onChange={handleChange}
                   placeholder="City"
-                  className={errors.city ? 'border-red-500' : ''}
+                  className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.city ? 'border-red-500' : ''}`}
                 />
                 {errors.city && (
-                  <p className="text-red-500 text-xs mt-1">{errors.city}</p>
+                  <p className="text-red-400 text-xs mt-1">{errors.city}</p>
                 )}
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-blue-300 mb-1">
                   State *
                 </label>
                 <Input
@@ -556,25 +559,33 @@ const OrderForm: React.FC<OrderFormProps> = ({ order, onClose }) => {
                   value={formData.state || ''}
                   onChange={handleChange}
                   placeholder="State"
-                  className={errors.state ? 'border-red-500' : ''}
+                  className={`bg-gray-800 border-gray-700 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${errors.state ? 'border-red-500' : ''}`}
                 />
                 {errors.state && (
-                  <p className="text-red-500 text-xs mt-1">{errors.state}</p>
+                  <p className="text-red-400 text-xs mt-1">{errors.state}</p>
                 )}
               </div>
             </div>
           </div>
           
-          <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-            <div className="text-lg font-semibold">
+          <div className="flex items-center justify-between border-t border-blue-800 pt-4 mt-4">
+            <div className="text-lg font-semibold text-blue-300">
               Total: ${formData.total?.toFixed(2) || '0.00'}
             </div>
             
             <div className="flex space-x-3">
-              <Button type="button" variant="outline" onClick={onClose}>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={onClose}
+                className="border-blue-700 text-blue-300 hover:bg-blue-900 hover:text-blue-100"
+              >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-oms-blue hover:bg-blue-700">
+              <Button 
+                type="submit" 
+                className="bg-blue-700 text-white hover:bg-blue-600 transition duration-200"
+              >
                 {order ? 'Update Order' : 'Create Order'}
               </Button>
             </div>
