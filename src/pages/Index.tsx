@@ -6,6 +6,8 @@ import { store } from '@/store';
 import Layout from '@/components/layout/Layout';
 import Dashboard from './Dashboard';
 import OrdersPage from './OrdersPage';
+import CustomersPage from './CustomersPage';
+import ProductsPage from './ProductsPage';
 
 const Index = () => {
   return (
@@ -15,8 +17,8 @@ const Index = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/customers" element={<ComingSoon title="Customers" />} />
-            <Route path="/products" element={<ComingSoon title="Products" />} />
+            <Route path="/customers" element={<CustomersPage />} />
+            <Route path="/products" element={<ProductsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
@@ -24,15 +26,5 @@ const Index = () => {
     </Provider>
   );
 };
-
-// Placeholder for unimplemented sections
-const ComingSoon = ({ title }: { title: string }) => (
-  <div className="flex flex-col items-center justify-center h-64 bg-white p-8 rounded-lg shadow">
-    <h2 className="text-2xl font-bold text-gray-800 mb-4">{title} Section</h2>
-    <p className="text-gray-600 text-center">
-      This section is coming soon. We're currently implementing the Orders section as requested.
-    </p>
-  </div>
-);
 
 export default Index;
